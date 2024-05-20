@@ -1,0 +1,19 @@
+import LogoImage from '@/../public/logo.png';
+
+function Logo() {
+  return (
+    <a href='/' className='flex items-center gap-4 z-10'>
+      <img
+        src={LogoImage.src}
+        height='60'
+        width='60'
+        alt='The Wild Oasis logo'
+      />
+      <span className='text-xl font-semibold text-primary-100'>
+        The Wild Oasis
+      </span>
+    </a>
+  );
+}
+
+export default Logo;
