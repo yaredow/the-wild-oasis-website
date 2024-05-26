@@ -1,5 +1,7 @@
 import Image from 'next/image';
-import image1 from '@/public/about-1.jpg';
+import image1 from '@/../public/about-1.jpg';
+import image2 from '@/../public/about-2.jpg';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'About',
@@ -46,7 +48,7 @@ export default function Page() {
 
       <div className='relative aspect-square col-span-2'>
         <Image
-          src='/about-2.jpg'
+          src={image2}
           fill
           className='object-cover'
           alt='Family that manages The Wild Oasis'
@@ -75,12 +77,12 @@ export default function Page() {
           </p>
 
           <div>
-            <a
+            <Link
               href='/cabins'
               className='inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all'
             >
               Explore our luxury cabins
-            </a>
+            </Link>
           </div>
         </div>
       </div>
