@@ -69,6 +69,7 @@ const config = {
     },
     fontFamily: {
       sans: ['var(--font-sans)', ...fontFamily.sans],
+      josefin: ['var(--font-josefin)'],
     },
   },
   plugins: [require('tailwindcss-animate')],
