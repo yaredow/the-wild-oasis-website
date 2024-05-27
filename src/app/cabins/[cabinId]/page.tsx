@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import { getCabinWithId } from '@/data/cabin';
 import { EyeIcon, MapPinIcon, UsersIcon } from 'lucide-react';
 import Image from 'next/image';
 
@@ -7,18 +7,8 @@ export async function generateMetadata({
 }: {
   params: { cabinId: number };
 }) {
-  const { cabinId } = params;
-  const cabin = await prisma.cabins.findUnique({ where: { id: cabinId } });
-
-  if (!cabin) {
-    return {
-      title: 'Cabin not found',
-    };
-  }
-
-  return {
-    title: `Cabin ${cabin?.name}`,
-  };
+  const cabin = await getCabinWithId(params.cabinId);
+  return { title: `Cabin ${cabin?.name}` };
 }
 
 export default async function Page({
@@ -28,7 +18,8 @@ export default async function Page({
 }) {
   const { cabinId } = params;
 
-  const cabin = await prisma.cabins.findUnique({ where: { id: cabinId } });
+  const cabin = await getCabinWithId(cabinId);
+  console.log(cabin);
 
   return (
     <div className='max-w-6xl mx-auto mt-8'>
