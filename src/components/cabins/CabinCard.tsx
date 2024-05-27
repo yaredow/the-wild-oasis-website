@@ -5,12 +5,12 @@ import Image from 'next/image';
 function CabinCard({ cabin }: { cabin: cabins }) {
   return (
     <div className='flex border-primary-800 border'>
-      <div className=' relative aspect-square'>
+      <div className='relative flex-1'>
         <Image
           src={cabin.image as string}
           fill
+          className=' object-cover'
           alt={`Cabin ${cabin.name}`}
-          className='flex-1 border-r border-primary-800'
         />
       </div>
 
