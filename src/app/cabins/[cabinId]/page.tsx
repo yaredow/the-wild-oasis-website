@@ -2,6 +2,25 @@ import prisma from '@/lib/prisma';
 import { EyeIcon, MapPinIcon, UsersIcon } from 'lucide-react';
 import Image from 'next/image';
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { cabinId: number };
+}) {
+  const { cabinId } = params;
+  const cabin = await prisma.cabins.findUnique({ where: { id: cabinId } });
+
+  if (!cabin) {
+    return {
+      title: 'Cabin not found',
+    };
+  }
+
+  return {
+    title: `Cabin ${cabin?.name}`,
+  };
+}
+
 export default async function Page({
   params,
 }: {
