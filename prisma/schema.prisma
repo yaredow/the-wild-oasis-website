@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model bookings {
+  id           BigInt    @id @default(autoincrement())
+  created_at   DateTime  @default(now()) @db.Timestamptz(6)
+  startDate    DateTime? @db.Timestamp(6)
+  endDate      DateTime? @db.Timestamp(6)
+  numNights    Int?      @db.SmallInt
+  numGuests    Int?      @db.SmallInt
+  cabinPrice   Float?    @db.Real
+  extrasPrice  Float?    @db.Real
+  totalPrice   Float?    @db.Real
+  status       String?
+  hasBreakfast Boolean?
+  isPaid       Boolean?
+  observations String?
+  cabinId      BigInt?
+  guestId      BigInt?
+  cabins       cabins?   @relation(fields: [cabinId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  guests       guests?   @relation(fields: [guestId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model cabins {
+  id           BigInt     @id @default(autoincrement())
+  created_at   DateTime   @default(now()) @db.Timestamptz(6)
+  name         String?
+  maxCapacity  Int?       @db.SmallInt
+  regularPrice Int?       @db.SmallInt
+  discount     Int?       @db.SmallInt
+  description  String?
+  image        String?
+  bookings     bookings[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model guests {
+  id          BigInt     @id @default(autoincrement())
+  created_at  DateTime   @default(now()) @db.Timestamptz(6)
+  fullName    String?
+  email       String?
+  nationalID  String?
+  nationality String?
+  countryFlag String?
+  bookings    bookings[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model setttings {
+  id                  BigInt   @id @default(autoincrement())
+  created_at          DateTime @default(now()) @db.Timestamptz(6)
+  minBookingLength    Int?     @db.SmallInt
+  maxBookingLength    Int?     @db.SmallInt
+  maxGuestsPerBooking Int?     @db.SmallInt
+  breakfastPrice      Float?   @db.Real
+}
