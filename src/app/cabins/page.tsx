@@ -1,8 +1,10 @@
 import CabinCard from '@/components/cabins/CabinCard';
+import prisma from '@/lib/prisma';
+import { cabins } from '@prisma/client';
 
-export default function Page() {
+export default async function Page() {
   // CHANGE
-  const cabins: any = [];
+  const cabins = await prisma.cabins.findMany();
 
   return (
     <div>
