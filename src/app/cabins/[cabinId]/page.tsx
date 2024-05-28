@@ -1,21 +1,24 @@
 import { getCabinWithId } from '@/data/cabin';
 import { EyeIcon, MapPinIcon, UsersIcon } from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
-export async function generateMetadata({
-  params,
-}: {
+type props = {
   params: { cabinId: number };
-}) {
-  const cabin = await getCabinWithId(params.cabinId);
-  return { title: `Cabin ${cabin?.name}` };
+};
+
+export async function generateMetadata({ params }: props): Promise<Metadata> {
+  const { cabinId } = params;
+  const cabin = await getCabinWithId(cabinId);
+
+  if (!cabin) {
+    return { title: 'No cabin found' };
+  }
+
+  return { title: `Cabin ${cabin.name}` };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { cabinId: number };
-}) {
+export default async function Page({ params }: props) {
   const { cabinId } = params;
 
   const cabin = await getCabinWithId(cabinId);
