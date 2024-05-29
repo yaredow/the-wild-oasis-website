@@ -7,22 +7,17 @@ type props = {
   params: { cabinId: number };
 };
 
-export async function generateMetadata({ params }: props): Promise<Metadata> {
-  const { cabinId } = params;
-  const cabin = await getCabinWithId(cabinId);
+// export async function generateMetadata({ params }: props): Promise<Metadata> {
+//   const { cabinId } = params;
+//   const cabin = await getCabinWithId(cabinId);
 
-  if (!cabin) {
-    return { title: 'No cabin found' };
-  }
-
-  return { title: `Cabin ${cabin.name}` };
-}
+//   return { title: `Cabin ${cabin?.name}` };
+// }
 
 export default async function Page({ params }: props) {
   const { cabinId } = params;
 
   const cabin = await getCabinWithId(cabinId);
-  console.log(cabin);
 
   return (
     <div className='max-w-6xl mx-auto mt-8'>
