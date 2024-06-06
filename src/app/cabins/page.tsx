@@ -2,8 +2,14 @@ import Spinner from '@/components/Spinner';
 import CabinList from '@/components/cabins/CabinList';
 import { Suspense } from 'react';
 
-export default async function Page() {
-  // CHANGE
+type SearchParamProps = {
+  searchParams: {
+    capacity?: string;
+  };
+};
+
+export default async function Page({ searchParams }: SearchParamProps) {
+  const filter = searchParams?.capacity ?? 'all';
 
   return (
     <div>
@@ -19,7 +25,7 @@ export default async function Page() {
         Welcome to paradise.
       </p>
       <Suspense fallback={<Spinner />}>
-        <CabinList />
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );
