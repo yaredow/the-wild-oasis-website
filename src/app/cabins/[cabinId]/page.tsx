@@ -1,6 +1,7 @@
+import TextExpander from '@/components/TextExpander';
 import { getCabinWithId } from '@/data/cabin';
+import prisma from '@/lib/prisma';
 import { EyeIcon, MapPinIcon, UsersIcon } from 'lucide-react';
-import { Metadata } from 'next';
 import Image from 'next/image';
 
 type props = {
@@ -13,6 +14,15 @@ type props = {
 
 //   return { title: `Cabin ${cabin?.name}` };
 // }
+
+export async function generateStaticParams() {
+  const cabins = await prisma.cabins.findMany();
+  const ids = cabins.map((cabin) => ({
+    cabinId: String(cabin.id),
+  }));
+
+  return ids;
+}
 
 export default async function Page({ params }: props) {
   const { cabinId } = params;
@@ -36,7 +46,9 @@ export default async function Page({ params }: props) {
             Cabin {cabin?.name}
           </h3>
 
-          <p className='text-lg text-primary-300 mb-10'>{cabin?.description}</p>
+          <p className='text-lg text-primary-300 mb-10'>
+            <TextExpander>{cabin?.description as string}</TextExpander>
+          </p>
 
           <ul className='flex flex-col gap-4 mb-7'>
             <li className='flex gap-3 items-center'>
